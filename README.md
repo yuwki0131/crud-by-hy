@@ -1,19 +1,19 @@
-# Hylang/flaskでcrudアプリ
+# crud app by hylang/Flask
 
-## ローカル開発環境
+## run
 
-* docker(mysql)初期化
+* init docker (mysql)
 ```
 $ cd db
 $ docker build -t crud-by-hy-db .
 ```
 
-* docker(mysql)起動
+* run docker
 ```
 $ docker run -p 3306:3306 crud-by-hy-db
 ```
 
-* アプリケーション起動
+* invoke app
 ```
 $ hy app.hy
 ```
