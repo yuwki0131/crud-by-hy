@@ -52,6 +52,7 @@
         </div>
       </div>
 
+      {% for item in result %}
       <div class="box width-by-window">
         <article class="media">
           <div class="media-content">
@@ -60,18 +61,18 @@
                 <span class="icon is-small is-left">
                   <i class="fas fa-user"></i>
                 </span>
-                <strong>John Smith</strong>
+                <strong>{{ item[1] }}</strong>
                 &emsp;
-                <small> posted at 2019/02/23 16:02:01</small>
+                <small> posted at {{ item[2] }}</small>
                 <br>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
+                {{ item[0] }}
               </p>
             </div>
           </div>
         </article>
       </div>
     </div>
+    {% endfor %}
 
 
     <footer class="footer">
