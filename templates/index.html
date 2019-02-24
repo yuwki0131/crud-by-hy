@@ -28,28 +28,29 @@
     <div class="container">
 
       <div class="box width-by-window form-box">
-        <div class="field">
-          <p class="control has-icons-left">
-            <input class="input" type="name" placeholder="John Smith">
-            <span class="icon is-small is-left">
-              <i class="fas fa-user"></i>
-            </span>
-          </p>
-        </div>
-        <div class="field">
-          <div class="control has-icons-left">
-            <textarea class="textarea has-fixed-size"
-                      placeholder="Hello world!" style="width:auto;">
-            </textarea>
+        <form action="/comment" method="post">
+          <div class="field">
+            <p class="control has-icons-left">
+              <input class="input" name="user_name" type="name" placeholder="John Smith">
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
+            </p>
           </div>
-        </div>
-        <div class="field">
-          <p class="control">
-            <button class="button is-primary">
-              Comment
-            </button>
-          </p>
-        </div>
+          <div class="field">
+            <div class="control has-icons-left">
+              <textarea class="textarea has-fixed-size" name="comment_text"
+                        placeholder="Hello world!" style="width:auto;"></textarea>
+            </div>
+          </div>
+          <div class="field">
+            <p class="control">
+              <button class="button is-primary" type='submit'>
+                Comment
+              </button>
+            </p>
+          </div>
+        </form>
       </div>
 
       {% for item in result %}

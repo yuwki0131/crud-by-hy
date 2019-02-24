@@ -1,4 +1,4 @@
-(import [flask [Flask render_template request]])
+(import [flask [Flask render_template request redirect]])
 (import [mysql.connector [connection]])
 (import sys)
 (import os)
@@ -12,20 +12,32 @@
 
 (setv app.debug True)
 
-(setv conn
-      (connection.MySQLConnection
-        :user "root"
-        :password "passwd"
-        :host "127.0.0.1"
-        :database "site"))
+(defn create-connection []
+  (connection.MySQLConnection
+    :user "root"
+    :password "passwd"
+    :host "127.0.0.1"
+    :database "site"))
 
 (setv list-up-query
       "select comment_content, user_name, created_at from comments order by created_at desc")
 
 (defn list-up-comments []
-  (let [[cursor (conn.cursor)]
+  (let [[conn (create-connection)]
+        [cursor (conn.cursor)]
         [_ (cursor.execute list-up-query)]
         [result (cursor.fetchall)]
+        [_ (cursor.close)]]
+    result))
+
+(setv insert-comment-query
+      "insert into comments (comment_content, user_name) values (%s, %s)")
+
+(defn insert-comment [comment user-name]
+  (let [[conn (create-connection)]
+        [cursor (conn.cursor)]
+        [_ (cursor.execute insert-comment-query [comment user-name])]
+        [result (conn.commit)]
         [_ (cursor.close)]]
     result))
 
@@ -37,7 +49,8 @@
 
 (with-decorator (app.route "/comment" :methods ["POST"])
   (defn post-comment []
-    (let [method])
-    (render_template "./index.html")))
+    (let [[form request.form]
+          [_ (insert-comment (get form "comment_text") (get form "user_name"))]]
+                (redirect "/"))))
 
 (app.run)
